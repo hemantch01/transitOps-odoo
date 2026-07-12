@@ -1,0 +1,22 @@
+{
+  "name": "transitops-odoo",
+  "version": "1.0.0",
+  "description": "Smart Transport Operations Platform",
+  "main": "dist/server/index.js",
+  "scripts": {
+    "dev": "tsx watch server/index.ts",
+    "build": "tsc",
+    "start": "node dist/server/index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2"
+  },
+  "dependencies": {
+    "zod": "^4.4.3"
+  }
+}
