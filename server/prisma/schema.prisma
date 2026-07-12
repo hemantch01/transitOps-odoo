@@ -70,3 +70,66 @@ model Verification {
 
   @@map("verification")
 }
+
+model Vehicle {
+  id                 String        @id @default(uuid())
+  registrationNumber String        @unique
+  name               String
+  type               VehicleType
+  maxLoadCapacity    Float         // kg
+  currentOdometer    Float         @default(0)
+  acquisitionCost    Float
+  status             VehicleStatus @default(AVAILABLE)
+  region             String?
+  createdAt          DateTime      @default(now())
+  updatedAt          DateTime      @updatedAt
+
+  trips           Trip[]
+  maintenanceLogs MaintenanceLog[]
+  fuelLogs        FuelLog[]
+  expenses        Expense[]
+
+  @@index([status])
+  @@index([type])
+  @@index([region])
+}
+
+enum VehicleType {
+  TRUCK
+  VAN
+  BUS
+  CAR
+  BIKE
+}
+
+enum VehicleStatus {
+  AVAILABLE
+  ON_TRIP
+  IN_SHOP
+  RETIRED
+}
+
+model Driver {
+  id              String       @id @default(uuid())
+  name            String
+  licenseNumber   String       @unique
+  licenseCategory String
+  licenseExpiry   DateTime
+  contactNumber   String
+  safetyScore     Float        @default(100)
+  status          DriverStatus @default(AVAILABLE)
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @updatedAt
+
+  trips Trip[]
+
+  @@index([status])
+  @@index([licenseExpiry])
+}
+
+enum DriverStatus {
+  AVAILABLE
+  ON_TRIP
+  OFF_DUTY
+  SUSPENDED
+}
