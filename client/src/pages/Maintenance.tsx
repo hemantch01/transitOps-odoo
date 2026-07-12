@@ -67,14 +67,14 @@ export function Maintenance() {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold text-text-primary dark:text-dark-text-primary">Maintenance</h1>
+        <h1 className="text-2xl font-bold text-slate-800">Maintenance</h1>
         <div className="flex gap-2">
-          <select value={statusFilter} onChange={(e) => setStatusFilter(e.target.value)} className="rounded-lg border border-border bg-surface px-3 py-1.5 text-sm dark:border-dark-border dark:bg-dark-surface-secondary dark:text-dark-text-primary">
+          <select value={statusFilter} onChange={(e) => setStatusFilter(e.target.value)} className="rounded-lg border border-slate-200 bg-white px-3 py-1.5 text-sm">
             <option value="">all</option>
             <option value="ACTIVE">active</option>
             <option value="COMPLETED">completed</option>
           </select>
-          <button onClick={() => setShowForm(true)} className="flex items-center gap-1.5 rounded-lg gradient-primary px-4 py-1.5 text-sm font-medium text-white hover:opacity-90">
+          <button onClick={() => setShowForm(true)} className="flex items-center gap-1.5 rounded-lg bg-gradient-to-br from-violet-500 to-purple-700 px-4 py-1.5 text-sm font-medium text-white hover:opacity-90">
             <Plus className="h-4 w-4" /> add record
           </button>
         </div>
@@ -84,15 +84,15 @@ export function Maintenance() {
 
       {showForm && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm animate-fade-in">
-          <div className="w-full max-w-md rounded-xl border border-border bg-surface p-6 shadow-xl dark:border-dark-border dark:bg-dark-surface animate-slide-up">
+          <div className="w-full max-w-md rounded-xl border border-slate-200 bg-white p-6 shadow-xl animate-slide-up">
             <div className="flex items-center justify-between mb-4">
-              <h3 className="text-lg font-semibold dark:text-dark-text-primary">new maintenance record</h3>
-              <button onClick={resetForm}><X className="h-5 w-5 text-text-muted" /></button>
+              <h3 className="text-lg font-semibold text-slate-800">new maintenance record</h3>
+              <button onClick={resetForm}><X className="h-5 w-5 text-slate-400" /></button>
             </div>
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
-                <label className="mb-1 block text-sm font-medium dark:text-dark-text-primary">vehicle</label>
-                <select value={form.vehicleId} onChange={(e) => setForm({ ...form, vehicleId: e.target.value })} required className="w-full rounded-lg border border-border bg-surface px-3 py-2 text-sm outline-none focus:border-primary-500 dark:border-dark-border dark:bg-dark-surface-secondary dark:text-dark-text-primary">
+                <label className="mb-1 block text-sm font-medium">vehicle</label>
+                <select value={form.vehicleId} onChange={(e) => setForm({ ...form, vehicleId: e.target.value })} required className="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm outline-none focus:border-violet-500 focus:ring-2 focus:ring-violet-100">
                   <option value="">select vehicle</option>
                   {(vehicleData?.data || []).filter((v: any) => v.status !== "ON_TRIP").map((v: any) => (
                     <option key={v.id} value={v.id}>{v.registrationNumber} — {v.name}</option>
@@ -100,20 +100,20 @@ export function Maintenance() {
                 </select>
               </div>
               <div>
-                <label className="mb-1 block text-sm font-medium dark:text-dark-text-primary">type</label>
-                <input value={form.type} onChange={(e) => setForm({ ...form, type: e.target.value })} required className="w-full rounded-lg border border-border bg-surface px-3 py-2 text-sm outline-none focus:border-primary-500 dark:border-dark-border dark:bg-dark-surface-secondary dark:text-dark-text-primary" placeholder="Oil Change, Tire Replacement..." />
+                <label className="mb-1 block text-sm font-medium">type</label>
+                <input value={form.type} onChange={(e) => setForm({ ...form, type: e.target.value })} required className="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm outline-none focus:border-violet-500 focus:ring-2 focus:ring-violet-100" placeholder="Oil Change, Tire Replacement..." />
               </div>
               <div>
-                <label className="mb-1 block text-sm font-medium dark:text-dark-text-primary">description</label>
-                <input value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} className="w-full rounded-lg border border-border bg-surface px-3 py-2 text-sm outline-none focus:border-primary-500 dark:border-dark-border dark:bg-dark-surface-secondary dark:text-dark-text-primary" />
+                <label className="mb-1 block text-sm font-medium">description</label>
+                <input value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} className="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm outline-none focus:border-violet-500 focus:ring-2 focus:ring-violet-100" />
               </div>
               <div>
-                <label className="mb-1 block text-sm font-medium dark:text-dark-text-primary">cost (₹)</label>
-                <input type="number" value={form.cost} onChange={(e) => setForm({ ...form, cost: e.target.value })} required className="w-full rounded-lg border border-border bg-surface px-3 py-2 text-sm outline-none focus:border-primary-500 dark:border-dark-border dark:bg-dark-surface-secondary dark:text-dark-text-primary" />
+                <label className="mb-1 block text-sm font-medium">cost (₹)</label>
+                <input type="number" value={form.cost} onChange={(e) => setForm({ ...form, cost: e.target.value })} required className="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm outline-none focus:border-violet-500 focus:ring-2 focus:ring-violet-100" />
               </div>
               <div className="flex justify-end gap-2">
-                <button type="button" onClick={resetForm} className="rounded-lg border border-border px-4 py-2 text-sm dark:border-dark-border dark:text-dark-text-secondary">cancel</button>
-                <button type="submit" disabled={createMutation.isPending} className="rounded-lg gradient-primary px-4 py-2 text-sm font-medium text-white disabled:opacity-50">create</button>
+                <button type="button" onClick={resetForm} className="rounded-lg border border-slate-200 px-4 py-2 text-sm">cancel</button>
+                <button type="submit" disabled={createMutation.isPending} className="rounded-lg bg-gradient-to-br from-violet-500 to-purple-700 px-4 py-2 text-sm font-medium text-white disabled:opacity-50">create</button>
               </div>
             </form>
           </div>

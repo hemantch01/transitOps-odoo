@@ -1,17 +1,17 @@
 @import "tailwindcss";
 
 @theme {
-  /* odoo-inspired warm palette — no blue */
-  --color-primary-50: #faf5ff;
-  --color-primary-100: #f3e8ff;
-  --color-primary-200: #e9d5ff;
-  --color-primary-300: #d8b4fe;
-  --color-primary-400: #c084fc;
-  --color-primary-500: #a855f7;
-  --color-primary-600: #9333ea;
-  --color-primary-700: #7e22ce;
-  --color-primary-800: #6b21a8;
-  --color-primary-900: #581c87;
+  /* Odoo-inspired vibrant palette */
+  --color-primary-50: #f5f3ff;
+  --color-primary-100: #ede9fe;
+  --color-primary-200: #ddd6fe;
+  --color-primary-300: #c4b5fd;
+  --color-primary-400: #a78bfa;
+  --color-primary-500: #8b5cf6;
+  --color-primary-600: #7c3aed;
+  --color-primary-700: #6d28d9;
+  --color-primary-800: #5b21b6;
+  --color-primary-900: #4c1d95;
 
   --color-accent-50: #fffbeb;
   --color-accent-100: #fef3c7;
@@ -22,33 +22,37 @@
   --color-accent-600: #d97706;
   --color-accent-700: #b45309;
 
-  --color-success: #22c55e;
+  --color-success: #10b981;
+  --color-success-light: #d1fae5;
   --color-warning: #f59e0b;
+  --color-warning-light: #fef3c7;
   --color-danger: #ef4444;
+  --color-danger-light: #fee2e2;
   --color-info: #8b5cf6;
+  --color-info-light: #ede9fe;
 
   --color-surface: #ffffff;
   --color-surface-hover: #f9fafb;
-  --color-surface-secondary: #f3f4f6;
-  --color-border: #e5e7eb;
-  --color-text-primary: #111827;
-  --color-text-secondary: #6b7280;
-  --color-text-muted: #9ca3af;
+  --color-surface-secondary: #f8fafc;
+  --color-border: #e2e8f0;
+  --color-text-primary: #1e293b;
+  --color-text-secondary: #64748b;
+  --color-text-muted: #94a3b8;
 
-  /* dark mode */
-  --color-dark-surface: #0f0f12;
-  --color-dark-surface-hover: #1a1a22;
-  --color-dark-surface-secondary: #24242e;
-  --color-dark-border: #2e2e3a;
-  --color-dark-text-primary: #f3f4f6;
-  --color-dark-text-secondary: #9ca3af;
-  --color-dark-text-muted: #6b7280;
+  /* dark mode — kept for toggle but lighter */
+  --color-dark-surface: #1e1b2e;
+  --color-dark-surface-hover: #2a2740;
+  --color-dark-surface-secondary: #252240;
+  --color-dark-border: #3b3660;
+  --color-dark-text-primary: #f1f0ff;
+  --color-dark-text-secondary: #a5a0cc;
+  --color-dark-text-muted: #7a75a0;
 
   --font-sans: 'Inter', system-ui, sans-serif;
   --radius-sm: 6px;
-  --radius-md: 8px;
-  --radius-lg: 12px;
-  --radius-xl: 16px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 18px;
 }
 
 @layer base {
@@ -60,7 +64,7 @@
 
   body {
     font-family: var(--font-sans);
-    background: var(--color-surface);
+    background: #f8fafc;
     color: var(--color-text-primary);
     -webkit-font-smoothing: antialiased;
   }
@@ -70,28 +74,141 @@
     background: var(--color-dark-surface);
     color: var(--color-dark-text-primary);
   }
+
+  /* scrollbar */
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
 }
 
 @layer utilities {
   .glass {
-    background: rgba(255, 255, 255, 0.7);
-    backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.6);
   }
 
   .dark .glass {
-    background: rgba(15, 15, 18, 0.8);
-    border: 1px solid rgba(255, 255, 255, 0.05);
+    background: rgba(30, 27, 46, 0.85);
+    border: 1px solid rgba(255, 255, 255, 0.06);
   }
 
   .gradient-primary {
-    background: linear-gradient(135deg, var(--color-primary-600), var(--color-primary-800));
+    background: linear-gradient(135deg, #8b5cf6, #6d28d9);
   }
 
   .gradient-accent {
-    background: linear-gradient(135deg, var(--color-accent-500), var(--color-accent-700));
+    background: linear-gradient(135deg, #f59e0b, #d97706);
   }
 
+  .gradient-success {
+    background: linear-gradient(135deg, #10b981, #059669);
+  }
+
+  .gradient-danger {
+    background: linear-gradient(135deg, #ef4444, #dc2626);
+  }
+
+  .gradient-info {
+    background: linear-gradient(135deg, #6366f1, #4f46e5);
+  }
+
+  /* odoo-style page background with subtle pattern */
+  .page-bg {
+    background-color: #f8fafc;
+    background-image:
+      radial-gradient(circle at 1px 1px, #e2e8f0 1px, transparent 0);
+    background-size: 32px 32px;
+  }
+
+  .dark .page-bg {
+    background-color: var(--color-dark-surface);
+    background-image:
+      radial-gradient(circle at 1px 1px, rgba(255,255,255,0.04) 1px, transparent 0);
+  }
+
+  /* card styles */
+  .card {
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    transition: all 0.2s ease;
+  }
+
+  .card:hover {
+    box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+    border-color: #cbd5e1;
+  }
+
+  .dark .card {
+    background: var(--color-dark-surface-secondary);
+    border-color: var(--color-dark-border);
+  }
+
+  /* colorful left-border card accents */
+  .card-purple { border-left: 4px solid #8b5cf6; }
+  .card-amber { border-left: 4px solid #f59e0b; }
+  .card-green { border-left: 4px solid #10b981; }
+  .card-red { border-left: 4px solid #ef4444; }
+  .card-blue { border-left: 4px solid #3b82f6; }
+  .card-indigo { border-left: 4px solid #6366f1; }
+
+  /* button styles */
+  .btn-primary {
+    background: linear-gradient(135deg, #8b5cf6, #6d28d9);
+    color: white;
+    font-weight: 500;
+    padding: 0.5rem 1.25rem;
+    border-radius: 10px;
+    font-size: 0.875rem;
+    transition: all 0.2s;
+    border: none;
+    cursor: pointer;
+  }
+
+  .btn-primary:hover {
+    opacity: 0.9;
+    box-shadow: 0 4px 12px rgba(139, 92, 246, 0.35);
+    transform: translateY(-1px);
+  }
+
+  .btn-secondary {
+    background: white;
+    color: #64748b;
+    font-weight: 500;
+    padding: 0.5rem 1.25rem;
+    border-radius: 10px;
+    font-size: 0.875rem;
+    border: 1px solid #e2e8f0;
+    transition: all 0.2s;
+    cursor: pointer;
+  }
+
+  .btn-secondary:hover {
+    background: #f1f5f9;
+    border-color: #cbd5e1;
+  }
+
+  /* form input style */
+  .input {
+    width: 100%;
+    border-radius: 10px;
+    border: 1px solid #e2e8f0;
+    background: white;
+    padding: 0.625rem 0.875rem;
+    font-size: 0.875rem;
+    color: #1e293b;
+    outline: none;
+    transition: all 0.2s;
+  }
+
+  .input:focus {
+    border-color: #8b5cf6;
+    box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
+  }
+
+  /* animations */
   .animate-fade-in {
     animation: fadeIn 0.3s ease-out;
   }

@@ -28,17 +28,17 @@ export function Confirm({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm animate-fade-in">
-      <div className="w-full max-w-sm rounded-xl border border-border bg-surface p-6 shadow-xl dark:border-dark-border dark:bg-dark-surface animate-slide-up">
-        <h3 className="text-lg font-semibold text-text-primary dark:text-dark-text-primary">
+      <div className="w-full max-w-sm rounded-xl border border-slate-200 bg-white p-6 shadow-xl animate-slide-up">
+        <h3 className="text-lg font-semibold text-slate-800">
           {title}
         </h3>
-        <p className="mt-2 text-sm text-text-secondary dark:text-dark-text-secondary">
+        <p className="mt-2 text-sm text-slate-500">
           {message}
         </p>
         <div className="mt-6 flex gap-3 justify-end">
           <button
             onClick={onCancel}
-            className="rounded-lg border border-border px-4 py-2 text-sm font-medium text-text-secondary transition-colors hover:bg-surface-secondary dark:border-dark-border dark:text-dark-text-secondary"
+            className="rounded-lg border border-slate-200 px-4 py-2 text-sm font-medium text-slate-500 transition-colors hover:bg-slate-50"
           >
             cancel
           </button>

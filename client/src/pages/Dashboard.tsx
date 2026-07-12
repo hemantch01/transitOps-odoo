@@ -1,35 +1,37 @@
 import { useDashboard } from "../hooks/useAnalytics";
-import { Truck, Users, Route, Wrench, TrendingUp, Fuel } from "lucide-react";
-import { cn, formatCurrency } from "../lib/utils";
+import { Truck, Users, Route, TrendingUp } from "lucide-react";
+import { cn } from "../lib/utils";
 import { useState } from "react";
 import { RTO_REGIONS, VEHICLE_TYPES } from "../../../shared/schemas/vehicle";
 import {
   BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, PieChart, Pie, Cell,
 } from "recharts";
 
-const COLORS = ["#a855f7", "#f59e0b", "#22c55e", "#ef4444", "#6b7280"];
+const COLORS = ["#8b5cf6", "#f59e0b", "#10b981", "#ef4444", "#6366f1"];
 
 interface StatCardProps {
   title: string;
   value: number | string;
   icon: any;
-  color: string;
+  gradient: string;
+  iconBg: string;
   subtitle?: string;
+  borderColor: string;
 }
 
-function StatCard({ title, value, icon: Icon, color, subtitle }: StatCardProps) {
+function StatCard({ title, value, icon: Icon, gradient, iconBg, subtitle, borderColor }: StatCardProps) {
   return (
-    <div className="rounded-xl border border-border bg-surface p-5 transition-all duration-200 hover:shadow-md dark:border-dark-border dark:bg-dark-surface animate-slide-up">
+    <div className={cn("card p-5 animate-slide-up", borderColor)}>
       <div className="flex items-center justify-between">
         <div>
-          <p className="text-sm text-text-secondary dark:text-dark-text-secondary">{title}</p>
-          <p className="mt-1 text-2xl font-bold text-text-primary dark:text-dark-text-primary">{value}</p>
+          <p className="text-sm font-medium text-slate-500">{title}</p>
+          <p className="mt-1.5 text-3xl font-bold text-slate-800">{value}</p>
           {subtitle && (
-            <p className="mt-0.5 text-xs text-text-muted dark:text-dark-text-muted">{subtitle}</p>
+            <p className="mt-1 text-xs font-medium text-slate-400">{subtitle}</p>
           )}
         </div>
-        <div className={cn("flex h-11 w-11 items-center justify-center rounded-xl", color)}>
-          <Icon className="h-5 w-5 text-white" />
+        <div className={cn("flex h-12 w-12 items-center justify-center rounded-xl shadow-sm", iconBg)}>
+          <Icon className={cn("h-6 w-6", gradient)} />
         </div>
       </div>
     </div>
@@ -44,7 +46,7 @@ export function Dashboard() {
   if (isLoading) {
     return (
       <div className="flex h-64 items-center justify-center">
-        <div className="h-8 w-8 animate-spin rounded-full border-4 border-primary-500 border-t-transparent" />
+        <div className="h-8 w-8 animate-spin rounded-full border-4 border-violet-500 border-t-transparent" />
       </div>
     );
   }
@@ -69,12 +71,15 @@ export function Dashboard() {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold text-text-primary dark:text-dark-text-primary">Dashboard</h1>
+        <div>
+          <h1 className="text-2xl font-bold text-slate-800">Dashboard</h1>
+          <p className="text-sm text-slate-400 mt-0.5">Fleet overview & key metrics</p>
+        </div>
         <div className="flex gap-2">
           <select
             value={typeFilter}
             onChange={(e) => setTypeFilter(e.target.value)}
-            className="rounded-lg border border-border bg-surface px-3 py-1.5 text-sm dark:border-dark-border dark:bg-dark-surface-secondary dark:text-dark-text-primary"
+            className="input max-w-[160px]"
           >
             <option value="">all types</option>
             {VEHICLE_TYPES.map((t) => (
@@ -84,7 +89,7 @@ export function Dashboard() {
           <select
             value={regionFilter}
             onChange={(e) => setRegionFilter(e.target.value)}
-            className="rounded-lg border border-border bg-surface px-3 py-1.5 text-sm dark:border-dark-border dark:bg-dark-surface-secondary dark:text-dark-text-primary"
+            className="input max-w-[200px]"
           >
             <option value="">all regions</option>
             {RTO_REGIONS.map((r) => (
@@ -96,17 +101,48 @@ export function Dashboard() {
 
       {/* kpi cards */}
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        <StatCard title="Total Vehicles" value={kpis.vehicles.total} icon={Truck} color="gradient-primary" subtitle={`${kpis.vehicles.available} available`} />
-        <StatCard title="Active Drivers" value={kpis.drivers.total} icon={Users} color="bg-accent-500" subtitle={`${kpis.drivers.onDuty} on duty`} />
-        <StatCard title="Active Trips" value={kpis.trips.active} icon={Route} color="bg-success" subtitle={`${kpis.trips.pending} pending`} />
-        <StatCard title="Fleet Utilization" value={`${kpis.fleetUtilization}%`} icon={TrendingUp} color="bg-info" />
+        <StatCard
+          title="Total Vehicles"
+          value={kpis.vehicles.total}
+          icon={Truck}
+          gradient="text-violet-600"
+          iconBg="bg-violet-100"
+          borderColor="card-purple"
+          subtitle={`${kpis.vehicles.available} available`}
+        />
+        <StatCard
+          title="Active Drivers"
+          value={kpis.drivers.total}
+          icon={Users}
+          gradient="text-amber-600"
+          iconBg="bg-amber-100"
+          borderColor="card-amber"
+          subtitle={`${kpis.drivers.onDuty} on duty`}
+        />
+        <StatCard
+          title="Active Trips"
+          value={kpis.trips.active}
+          icon={Route}
+          gradient="text-emerald-600"
+          iconBg="bg-emerald-100"
+          borderColor="card-green"
+          subtitle={`${kpis.trips.pending} pending`}
+        />
+        <StatCard
+          title="Fleet Utilization"
+          value={`${kpis.fleetUtilization}%`}
+          icon={TrendingUp}
+          gradient="text-indigo-600"
+          iconBg="bg-indigo-100"
+          borderColor="card-indigo"
+        />
       </div>
 
       {/* charts */}
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
         {/* fleet status pie */}
-        <div className="rounded-xl border border-border bg-surface p-5 dark:border-dark-border dark:bg-dark-surface">
-          <h3 className="mb-4 font-semibold text-text-primary dark:text-dark-text-primary">Fleet Status</h3>
+        <div className="card p-5">
+          <h3 className="mb-4 text-base font-semibold text-slate-700">Fleet Status</h3>
           <ResponsiveContainer width="100%" height={250}>
             <PieChart>
               <Pie data={vehicleChart} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={90} innerRadius={55} paddingAngle={4}>
@@ -117,9 +153,9 @@ export function Dashboard() {
               <Tooltip />
             </PieChart>
           </ResponsiveContainer>
-          <div className="mt-2 flex flex-wrap justify-center gap-3">
+          <div className="mt-2 flex flex-wrap justify-center gap-4">
             {vehicleChart.map((d, i) => (
-              <div key={d.name} className="flex items-center gap-1.5 text-xs text-text-secondary dark:text-dark-text-secondary">
+              <div key={d.name} className="flex items-center gap-1.5 text-xs font-medium text-slate-500">
                 <div className="h-2.5 w-2.5 rounded-full" style={{ background: COLORS[i % COLORS.length] }} />
                 {d.name} ({d.value})
               </div>
@@ -128,14 +164,16 @@ export function Dashboard() {
         </div>
 
         {/* trip status bar */}
-        <div className="rounded-xl border border-border bg-surface p-5 dark:border-dark-border dark:bg-dark-surface">
-          <h3 className="mb-4 font-semibold text-text-primary dark:text-dark-text-primary">Trip Status</h3>
+        <div className="card p-5">
+          <h3 className="mb-4 text-base font-semibold text-slate-700">Trip Status</h3>
           <ResponsiveContainer width="100%" height={280}>
             <BarChart data={tripChart}>
-              <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{ fontSize: 12 }} />
-              <YAxis axisLine={false} tickLine={false} tick={{ fontSize: 12 }} />
-              <Tooltip />
-              <Bar dataKey="value" radius={[6, 6, 0, 0]}>
+              <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{ fontSize: 12, fill: "#94a3b8" }} />
+              <YAxis axisLine={false} tickLine={false} tick={{ fontSize: 12, fill: "#94a3b8" }} />
+              <Tooltip
+                contentStyle={{ borderRadius: "10px", border: "1px solid #e2e8f0", boxShadow: "0 4px 12px rgba(0,0,0,0.06)" }}
+              />
+              <Bar dataKey="value" radius={[8, 8, 0, 0]}>
                 {tripChart.map((_, i) => (
                   <Cell key={i} fill={COLORS[i % COLORS.length]} />
                 ))}

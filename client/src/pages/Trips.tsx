@@ -78,7 +78,7 @@ export function Trips() {
       render: (r: any) => (
         <div className="flex gap-1.5">
           {r.status === "DRAFT" && (
-            <button onClick={(e) => { e.stopPropagation(); dispatchMutation.mutate(r.id); }} className="flex items-center gap-1 rounded-md bg-primary-50 px-2 py-1 text-xs text-primary-700 hover:bg-primary-100 dark:bg-primary-900/20 dark:text-primary-300">
+            <button onClick={(e) => { e.stopPropagation(); dispatchMutation.mutate(r.id); }} className="flex items-center gap-1 rounded-md bg-primary-50 px-2 py-1 text-xs text-primary-700 hover:bg-primary-100">
               <Play className="h-3 w-3" /> dispatch
             </button>
           )}
@@ -100,16 +100,16 @@ export function Trips() {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold text-text-primary dark:text-dark-text-primary">Trips</h1>
+        <h1 className="text-2xl font-bold text-slate-800">Trips</h1>
         <div className="flex gap-2">
-          <select value={statusFilter} onChange={(e) => setStatusFilter(e.target.value)} className="rounded-lg border border-border bg-surface px-3 py-1.5 text-sm dark:border-dark-border dark:bg-dark-surface-secondary dark:text-dark-text-primary">
+          <select value={statusFilter} onChange={(e) => setStatusFilter(e.target.value)} className="rounded-lg border border-slate-200 bg-white px-3 py-1.5 text-sm">
             <option value="">all statuses</option>
             <option value="DRAFT">draft</option>
             <option value="DISPATCHED">dispatched</option>
             <option value="COMPLETED">completed</option>
             <option value="CANCELLED">cancelled</option>
           </select>
-          <button onClick={() => setShowForm(true)} className="flex items-center gap-1.5 rounded-lg gradient-primary px-4 py-1.5 text-sm font-medium text-white hover:opacity-90">
+          <button onClick={() => setShowForm(true)} className="flex items-center gap-1.5 rounded-lg bg-gradient-to-br from-violet-500 to-purple-700 px-4 py-1.5 text-sm font-medium text-white hover:opacity-90">
             <Plus className="h-4 w-4" /> new trip
           </button>
         </div>
@@ -120,24 +120,24 @@ export function Trips() {
       {/* create trip */}
       {showForm && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm animate-fade-in">
-          <div className="w-full max-w-lg rounded-xl border border-border bg-surface p-6 shadow-xl dark:border-dark-border dark:bg-dark-surface animate-slide-up">
+          <div className="w-full max-w-lg rounded-xl border border-slate-200 bg-white p-6 shadow-xl animate-slide-up">
             <div className="flex items-center justify-between mb-4">
-              <h3 className="text-lg font-semibold dark:text-dark-text-primary">new trip</h3>
-              <button onClick={resetForm}><X className="h-5 w-5 text-text-muted" /></button>
+              <h3 className="text-lg font-semibold text-slate-800">new trip</h3>
+              <button onClick={resetForm}><X className="h-5 w-5 text-slate-400" /></button>
             </div>
             <form onSubmit={handleCreate} className="space-y-4">
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="mb-1 block text-sm font-medium dark:text-dark-text-primary">from</label>
-                  <input value={form.source} onChange={(e) => setForm({ ...form, source: e.target.value })} required className="w-full rounded-lg border border-border bg-surface px-3 py-2 text-sm outline-none focus:border-primary-500 dark:border-dark-border dark:bg-dark-surface-secondary dark:text-dark-text-primary" placeholder="Jaipur" />
+                  <label className="mb-1 block text-sm font-medium">from</label>
+                  <input value={form.source} onChange={(e) => setForm({ ...form, source: e.target.value })} required className="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm outline-none focus:border-violet-500 focus:ring-2 focus:ring-violet-100" placeholder="Jaipur" />
                 </div>
                 <div>
-                  <label className="mb-1 block text-sm font-medium dark:text-dark-text-primary">to</label>
-                  <input value={form.destination} onChange={(e) => setForm({ ...form, destination: e.target.value })} required className="w-full rounded-lg border border-border bg-surface px-3 py-2 text-sm outline-none focus:border-primary-500 dark:border-dark-border dark:bg-dark-surface-secondary dark:text-dark-text-primary" placeholder="Mumbai" />
+                  <label className="mb-1 block text-sm font-medium">to</label>
+                  <input value={form.destination} onChange={(e) => setForm({ ...form, destination: e.target.value })} required className="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm outline-none focus:border-violet-500 focus:ring-2 focus:ring-violet-100" placeholder="Mumbai" />
                 </div>
                 <div>
-                  <label className="mb-1 block text-sm font-medium dark:text-dark-text-primary">vehicle</label>
-                  <select value={form.vehicleId} onChange={(e) => setForm({ ...form, vehicleId: e.target.value })} required className="w-full rounded-lg border border-border bg-surface px-3 py-2 text-sm outline-none focus:border-primary-500 dark:border-dark-border dark:bg-dark-surface-secondary dark:text-dark-text-primary">
+                  <label className="mb-1 block text-sm font-medium">vehicle</label>
+                  <select value={form.vehicleId} onChange={(e) => setForm({ ...form, vehicleId: e.target.value })} required className="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm outline-none focus:border-violet-500 focus:ring-2 focus:ring-violet-100">
                     <option value="">select vehicle</option>
                     {(vehicleData?.data || []).map((v: any) => (
                       <option key={v.id} value={v.id}>{v.registrationNumber} — {v.name} ({v.maxLoadCapacity}kg)</option>
@@ -145,8 +145,8 @@ export function Trips() {
                   </select>
                 </div>
                 <div>
-                  <label className="mb-1 block text-sm font-medium dark:text-dark-text-primary">driver</label>
-                  <select value={form.driverId} onChange={(e) => setForm({ ...form, driverId: e.target.value })} required className="w-full rounded-lg border border-border bg-surface px-3 py-2 text-sm outline-none focus:border-primary-500 dark:border-dark-border dark:bg-dark-surface-secondary dark:text-dark-text-primary">
+                  <label className="mb-1 block text-sm font-medium">driver</label>
+                  <select value={form.driverId} onChange={(e) => setForm({ ...form, driverId: e.target.value })} required className="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm outline-none focus:border-violet-500 focus:ring-2 focus:ring-violet-100">
                     <option value="">select driver</option>
                     {(driverData?.data || []).map((d: any) => (
                       <option key={d.id} value={d.id}>{d.name} — {d.licenseCategory}</option>
@@ -154,21 +154,21 @@ export function Trips() {
                   </select>
                 </div>
                 <div>
-                  <label className="mb-1 block text-sm font-medium dark:text-dark-text-primary">cargo weight (kg)</label>
-                  <input type="number" value={form.cargoWeight} onChange={(e) => setForm({ ...form, cargoWeight: e.target.value })} required className="w-full rounded-lg border border-border bg-surface px-3 py-2 text-sm outline-none focus:border-primary-500 dark:border-dark-border dark:bg-dark-surface-secondary dark:text-dark-text-primary" />
+                  <label className="mb-1 block text-sm font-medium">cargo weight (kg)</label>
+                  <input type="number" value={form.cargoWeight} onChange={(e) => setForm({ ...form, cargoWeight: e.target.value })} required className="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm outline-none focus:border-violet-500 focus:ring-2 focus:ring-violet-100" />
                 </div>
                 <div>
-                  <label className="mb-1 block text-sm font-medium dark:text-dark-text-primary">planned distance (km)</label>
-                  <input type="number" value={form.plannedDistance} onChange={(e) => setForm({ ...form, plannedDistance: e.target.value })} required className="w-full rounded-lg border border-border bg-surface px-3 py-2 text-sm outline-none focus:border-primary-500 dark:border-dark-border dark:bg-dark-surface-secondary dark:text-dark-text-primary" />
+                  <label className="mb-1 block text-sm font-medium">planned distance (km)</label>
+                  <input type="number" value={form.plannedDistance} onChange={(e) => setForm({ ...form, plannedDistance: e.target.value })} required className="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm outline-none focus:border-violet-500 focus:ring-2 focus:ring-violet-100" />
                 </div>
                 <div className="col-span-2">
-                  <label className="mb-1 block text-sm font-medium dark:text-dark-text-primary">rate per km (₹, optional)</label>
-                  <input type="number" value={form.ratePerKm} onChange={(e) => setForm({ ...form, ratePerKm: e.target.value })} className="w-full rounded-lg border border-border bg-surface px-3 py-2 text-sm outline-none focus:border-primary-500 dark:border-dark-border dark:bg-dark-surface-secondary dark:text-dark-text-primary" placeholder="auto-computes revenue on completion" />
+                  <label className="mb-1 block text-sm font-medium">rate per km (₹, optional)</label>
+                  <input type="number" value={form.ratePerKm} onChange={(e) => setForm({ ...form, ratePerKm: e.target.value })} className="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm outline-none focus:border-violet-500 focus:ring-2 focus:ring-violet-100" placeholder="auto-computes revenue on completion" />
                 </div>
               </div>
               <div className="flex justify-end gap-2">
-                <button type="button" onClick={resetForm} className="rounded-lg border border-border px-4 py-2 text-sm dark:border-dark-border dark:text-dark-text-secondary">cancel</button>
-                <button type="submit" disabled={createMutation.isPending} className="rounded-lg gradient-primary px-4 py-2 text-sm font-medium text-white disabled:opacity-50">create trip</button>
+                <button type="button" onClick={resetForm} className="rounded-lg border border-slate-200 px-4 py-2 text-sm">cancel</button>
+                <button type="submit" disabled={createMutation.isPending} className="rounded-lg bg-gradient-to-br from-violet-500 to-purple-700 px-4 py-2 text-sm font-medium text-white disabled:opacity-50">create trip</button>
               </div>
             </form>
           </div>
@@ -178,27 +178,27 @@ export function Trips() {
       {/* complete trip */}
       {showComplete && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm animate-fade-in">
-          <div className="w-full max-w-sm rounded-xl border border-border bg-surface p-6 shadow-xl dark:border-dark-border dark:bg-dark-surface animate-slide-up">
-            <h3 className="text-lg font-semibold mb-4 dark:text-dark-text-primary">complete trip</h3>
+          <div className="w-full max-w-sm rounded-xl border border-slate-200 bg-white p-6 shadow-xl animate-slide-up">
+            <h3 className="text-lg font-semibold text-slate-800 mb-4">complete trip</h3>
             <form onSubmit={handleComplete} className="space-y-4">
               <div>
-                <label className="mb-1 block text-sm font-medium dark:text-dark-text-primary">end odometer</label>
-                <input type="number" value={completeForm.endOdometer} onChange={(e) => setCompleteForm({ ...completeForm, endOdometer: e.target.value })} required className="w-full rounded-lg border border-border bg-surface px-3 py-2 text-sm outline-none focus:border-primary-500 dark:border-dark-border dark:bg-dark-surface-secondary dark:text-dark-text-primary" />
+                <label className="mb-1 block text-sm font-medium">end odometer</label>
+                <input type="number" value={completeForm.endOdometer} onChange={(e) => setCompleteForm({ ...completeForm, endOdometer: e.target.value })} required className="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm outline-none focus:border-violet-500 focus:ring-2 focus:ring-violet-100" />
               </div>
               <div>
-                <label className="mb-1 block text-sm font-medium dark:text-dark-text-primary">actual distance (km)</label>
-                <input type="number" value={completeForm.actualDistance} onChange={(e) => setCompleteForm({ ...completeForm, actualDistance: e.target.value })} required className="w-full rounded-lg border border-border bg-surface px-3 py-2 text-sm outline-none focus:border-primary-500 dark:border-dark-border dark:bg-dark-surface-secondary dark:text-dark-text-primary" />
+                <label className="mb-1 block text-sm font-medium">actual distance (km)</label>
+                <input type="number" value={completeForm.actualDistance} onChange={(e) => setCompleteForm({ ...completeForm, actualDistance: e.target.value })} required className="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm outline-none focus:border-violet-500 focus:ring-2 focus:ring-violet-100" />
               </div>
               <div>
-                <label className="mb-1 block text-sm font-medium dark:text-dark-text-primary">fuel consumed (liters)</label>
-                <input type="number" value={completeForm.fuelConsumed} onChange={(e) => setCompleteForm({ ...completeForm, fuelConsumed: e.target.value })} required className="w-full rounded-lg border border-border bg-surface px-3 py-2 text-sm outline-none focus:border-primary-500 dark:border-dark-border dark:bg-dark-surface-secondary dark:text-dark-text-primary" />
+                <label className="mb-1 block text-sm font-medium">fuel consumed (liters)</label>
+                <input type="number" value={completeForm.fuelConsumed} onChange={(e) => setCompleteForm({ ...completeForm, fuelConsumed: e.target.value })} required className="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm outline-none focus:border-violet-500 focus:ring-2 focus:ring-violet-100" />
               </div>
               <div>
-                <label className="mb-1 block text-sm font-medium dark:text-dark-text-primary">revenue override (₹, optional)</label>
-                <input type="number" value={completeForm.revenue} onChange={(e) => setCompleteForm({ ...completeForm, revenue: e.target.value })} className="w-full rounded-lg border border-border bg-surface px-3 py-2 text-sm outline-none focus:border-primary-500 dark:border-dark-border dark:bg-dark-surface-secondary dark:text-dark-text-primary" placeholder="leave empty to auto-compute" />
+                <label className="mb-1 block text-sm font-medium">revenue override (₹, optional)</label>
+                <input type="number" value={completeForm.revenue} onChange={(e) => setCompleteForm({ ...completeForm, revenue: e.target.value })} className="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm outline-none focus:border-violet-500 focus:ring-2 focus:ring-violet-100" placeholder="leave empty to auto-compute" />
               </div>
               <div className="flex justify-end gap-2">
-                <button type="button" onClick={() => setShowComplete(null)} className="rounded-lg border border-border px-4 py-2 text-sm dark:border-dark-border dark:text-dark-text-secondary">cancel</button>
+                <button type="button" onClick={() => setShowComplete(null)} className="rounded-lg border border-slate-200 px-4 py-2 text-sm">cancel</button>
                 <button type="submit" disabled={completeMutation.isPending} className="rounded-lg bg-success px-4 py-2 text-sm font-medium text-white disabled:opacity-50">mark completed</button>
               </div>
             </form>

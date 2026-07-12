@@ -1,4 +1,4 @@
-import { ReactNode, useState } from "react";
+import { ReactNode } from "react";
 import { cn } from "../../lib/utils";
 
 interface Column<T> {
@@ -30,29 +30,29 @@ export function DataTable<T extends { id: string }>({
   if (loading) {
     return (
       <div className="flex items-center justify-center py-12">
-        <div className="h-6 w-6 animate-spin rounded-full border-2 border-primary-500 border-t-transparent" />
+        <div className="h-6 w-6 animate-spin rounded-full border-2 border-violet-500 border-t-transparent" />
       </div>
     );
   }
 
   if (data.length === 0) {
     return (
-      <div className="flex flex-col items-center justify-center py-12 text-text-muted dark:text-dark-text-muted">
+      <div className="flex flex-col items-center justify-center py-12 text-slate-400">
         <p className="text-sm">{emptyMessage}</p>
       </div>
     );
   }
 
   return (
-    <div className="overflow-x-auto rounded-xl border border-border dark:border-dark-border">
+    <div className="overflow-x-auto rounded-xl border border-slate-200 bg-white">
       <table className="w-full text-sm">
         <thead>
-          <tr className="border-b border-border bg-surface-secondary dark:border-dark-border dark:bg-dark-surface-secondary">
+          <tr className="border-b border-slate-100 bg-slate-50/80">
             {columns.map((col) => (
               <th
                 key={col.key}
                 className={cn(
-                  "px-4 py-3 text-left font-medium text-text-secondary dark:text-dark-text-secondary",
+                  "px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-400",
                   col.className
                 )}
               >
@@ -67,14 +67,14 @@ export function DataTable<T extends { id: string }>({
               key={row.id}
               onClick={() => onRowClick?.(row)}
               className={cn(
-                "border-b border-border transition-colors dark:border-dark-border",
-                "hover:bg-surface-hover dark:hover:bg-dark-surface-hover",
+                "border-b border-slate-50 transition-colors",
+                "hover:bg-violet-50/40",
                 onRowClick && "cursor-pointer",
-                i % 2 === 0 ? "bg-surface dark:bg-dark-surface" : "bg-surface-secondary/30 dark:bg-dark-surface-secondary/30"
+                i % 2 === 0 ? "bg-white" : "bg-slate-50/30"
               )}
             >
               {columns.map((col) => (
-                <td key={col.key} className={cn("px-4 py-3 text-text-primary dark:text-dark-text-primary", col.className)}>
+                <td key={col.key} className={cn("px-4 py-3 text-slate-700", col.className)}>
                   {col.render ? col.render(row) : (row as any)[col.key]}
                 </td>
               ))}
@@ -84,10 +84,10 @@ export function DataTable<T extends { id: string }>({
       </table>
 
       {nextCursor && onLoadMore && (
-        <div className="flex justify-center border-t border-border p-3 dark:border-dark-border">
+        <div className="flex justify-center border-t border-slate-100 p-3">
           <button
             onClick={onLoadMore}
-            className="rounded-lg bg-primary-50 px-4 py-1.5 text-sm font-medium text-primary-700 transition-colors hover:bg-primary-100 dark:bg-primary-900/20 dark:text-primary-300"
+            className="btn-secondary text-xs"
           >
             load more
           </button>

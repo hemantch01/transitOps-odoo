@@ -84,7 +84,7 @@ export function Drivers() {
       header: "",
       render: (r: any) => (
         <div className="flex gap-2">
-          <button onClick={(e) => { e.stopPropagation(); openEdit(r); }} className="text-xs text-primary-600 hover:underline dark:text-primary-400">edit</button>
+          <button onClick={(e) => { e.stopPropagation(); openEdit(r); }} className="text-xs text-primary-600 hover:underline">edit</button>
           <button onClick={(e) => { e.stopPropagation(); setDeleteId(r.id); }} className="text-xs text-danger hover:underline">delete</button>
         </div>
       ),
@@ -94,16 +94,16 @@ export function Drivers() {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold text-text-primary dark:text-dark-text-primary">Drivers</h1>
+        <h1 className="text-2xl font-bold text-slate-800">Drivers</h1>
         <div className="flex gap-2">
-          <select value={statusFilter} onChange={(e) => setStatusFilter(e.target.value)} className="rounded-lg border border-border bg-surface px-3 py-1.5 text-sm dark:border-dark-border dark:bg-dark-surface-secondary dark:text-dark-text-primary">
+          <select value={statusFilter} onChange={(e) => setStatusFilter(e.target.value)} className="rounded-lg border border-slate-200 bg-white px-3 py-1.5 text-sm">
             <option value="">all statuses</option>
             <option value="AVAILABLE">available</option>
             <option value="ON_TRIP">on trip</option>
             <option value="OFF_DUTY">off duty</option>
             <option value="SUSPENDED">suspended</option>
           </select>
-          <button onClick={() => { resetForm(); setShowForm(true); }} className="flex items-center gap-1.5 rounded-lg gradient-primary px-4 py-1.5 text-sm font-medium text-white hover:opacity-90">
+          <button onClick={() => { resetForm(); setShowForm(true); }} className="flex items-center gap-1.5 rounded-lg bg-gradient-to-br from-violet-500 to-purple-700 px-4 py-1.5 text-sm font-medium text-white hover:opacity-90">
             <Plus className="h-4 w-4" /> add driver
           </button>
         </div>
@@ -113,39 +113,39 @@ export function Drivers() {
 
       {showForm && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm animate-fade-in">
-          <div className="w-full max-w-lg rounded-xl border border-border bg-surface p-6 shadow-xl dark:border-dark-border dark:bg-dark-surface animate-slide-up">
+          <div className="w-full max-w-lg rounded-xl border border-slate-200 bg-white p-6 shadow-xl animate-slide-up">
             <div className="flex items-center justify-between mb-4">
-              <h3 className="text-lg font-semibold dark:text-dark-text-primary">{editing ? "edit driver" : "add driver"}</h3>
-              <button onClick={resetForm} className="text-text-muted hover:text-text-primary dark:text-dark-text-muted"><X className="h-5 w-5" /></button>
+              <h3 className="text-lg font-semibold text-slate-800">{editing ? "edit driver" : "add driver"}</h3>
+              <button onClick={resetForm} className="text-slate-400 hover:text-slate-800"><X className="h-5 w-5" /></button>
             </div>
             <form onSubmit={handleSubmit} className="space-y-4">
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="mb-1 block text-sm font-medium dark:text-dark-text-primary">name</label>
-                  <input value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} required className="w-full rounded-lg border border-border bg-surface px-3 py-2 text-sm outline-none focus:border-primary-500 dark:border-dark-border dark:bg-dark-surface-secondary dark:text-dark-text-primary" placeholder="Rajesh Kumar" />
+                  <label className="mb-1 block text-sm font-medium">name</label>
+                  <input value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} required className="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm outline-none focus:border-violet-500 focus:ring-2 focus:ring-violet-100" placeholder="Rajesh Kumar" />
                 </div>
                 <div>
-                  <label className="mb-1 block text-sm font-medium dark:text-dark-text-primary">license number</label>
-                  <input value={form.licenseNumber} onChange={(e) => setForm({ ...form, licenseNumber: e.target.value })} required disabled={!!editing} className="w-full rounded-lg border border-border bg-surface px-3 py-2 text-sm outline-none focus:border-primary-500 dark:border-dark-border dark:bg-dark-surface-secondary dark:text-dark-text-primary disabled:opacity-50" placeholder="RJ14-2019-0045678" />
+                  <label className="mb-1 block text-sm font-medium">license number</label>
+                  <input value={form.licenseNumber} onChange={(e) => setForm({ ...form, licenseNumber: e.target.value })} required disabled={!!editing} className="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm outline-none focus:border-violet-500 focus:ring-2 focus:ring-violet-100 disabled:opacity-50" placeholder="RJ14-2019-0045678" />
                 </div>
                 <div>
-                  <label className="mb-1 block text-sm font-medium dark:text-dark-text-primary">category</label>
-                  <select value={form.licenseCategory} onChange={(e) => setForm({ ...form, licenseCategory: e.target.value })} className="w-full rounded-lg border border-border bg-surface px-3 py-2 text-sm outline-none focus:border-primary-500 dark:border-dark-border dark:bg-dark-surface-secondary dark:text-dark-text-primary">
+                  <label className="mb-1 block text-sm font-medium">category</label>
+                  <select value={form.licenseCategory} onChange={(e) => setForm({ ...form, licenseCategory: e.target.value })} className="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm outline-none focus:border-violet-500 focus:ring-2 focus:ring-violet-100">
                     {LICENSE_CATEGORIES.map((c) => <option key={c} value={c}>{c}</option>)}
                   </select>
                 </div>
                 <div>
-                  <label className="mb-1 block text-sm font-medium dark:text-dark-text-primary">license expiry</label>
-                  <input type="date" value={form.licenseExpiry} onChange={(e) => setForm({ ...form, licenseExpiry: e.target.value })} required className="w-full rounded-lg border border-border bg-surface px-3 py-2 text-sm outline-none focus:border-primary-500 dark:border-dark-border dark:bg-dark-surface-secondary dark:text-dark-text-primary" />
+                  <label className="mb-1 block text-sm font-medium">license expiry</label>
+                  <input type="date" value={form.licenseExpiry} onChange={(e) => setForm({ ...form, licenseExpiry: e.target.value })} required className="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm outline-none focus:border-violet-500 focus:ring-2 focus:ring-violet-100" />
                 </div>
                 <div className="col-span-2">
-                  <label className="mb-1 block text-sm font-medium dark:text-dark-text-primary">contact number</label>
-                  <input value={form.contactNumber} onChange={(e) => setForm({ ...form, contactNumber: e.target.value })} required className="w-full rounded-lg border border-border bg-surface px-3 py-2 text-sm outline-none focus:border-primary-500 dark:border-dark-border dark:bg-dark-surface-secondary dark:text-dark-text-primary" placeholder="9876543210" />
+                  <label className="mb-1 block text-sm font-medium">contact number</label>
+                  <input value={form.contactNumber} onChange={(e) => setForm({ ...form, contactNumber: e.target.value })} required className="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm outline-none focus:border-violet-500 focus:ring-2 focus:ring-violet-100" placeholder="9876543210" />
                 </div>
               </div>
               <div className="flex justify-end gap-2">
-                <button type="button" onClick={resetForm} className="rounded-lg border border-border px-4 py-2 text-sm dark:border-dark-border dark:text-dark-text-secondary">cancel</button>
-                <button type="submit" disabled={createMutation.isPending || updateMutation.isPending} className="rounded-lg gradient-primary px-4 py-2 text-sm font-medium text-white disabled:opacity-50">
+                <button type="button" onClick={resetForm} className="rounded-lg border border-slate-200 px-4 py-2 text-sm">cancel</button>
+                <button type="submit" disabled={createMutation.isPending || updateMutation.isPending} className="rounded-lg bg-gradient-to-br from-violet-500 to-purple-700 px-4 py-2 text-sm font-medium text-white disabled:opacity-50">
                   {editing ? "update" : "create"}
                 </button>
               </div>

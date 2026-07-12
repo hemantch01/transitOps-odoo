@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { signIn, signUp } from "../lib/auth-client";
-import { Grid, Map, Zap, Shield, BarChart3, AlertCircle, Loader2 } from "lucide-react";
+import { Map, Zap, Shield, BarChart3, AlertCircle, Loader2 } from "lucide-react";
+import logo from "../assets/logo.png";
 
 // Added specific, distinct colors for each feature subdivision
 const platformFeatures = [
@@ -96,8 +97,8 @@ export function Login() {
         <div className="relative z-10 mx-auto w-full max-w-[480px]">
           {/* Brand Header */}
           <div className="mb-10 inline-flex items-center space-x-3">
-            <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-slate-900 shadow-sm">
-              <Grid className="h-5 w-5 text-white" />
+            <div className="flex h-9 w-9 items-center justify-center rounded-lg overflow-hidden">
+              <img src={logo} alt="TransitOps" className="h-9 w-9 object-contain" />
             </div>
             <span className="text-xl font-semibold tracking-tight text-slate-900">TransitOps</span>
           </div>
@@ -173,7 +174,7 @@ export function Login() {
                   onChange={(e) => setName(e.target.value)}
                   required
                   disabled={loading}
-                  className="w-full rounded-lg border border-slate-200 bg-white px-3.5 py-2.5 text-[15px] text-slate-900 outline-none transition-all placeholder:text-slate-400 focus:border-slate-400 focus:ring-4 focus:ring-slate-900/5 disabled:bg-slate-50"
+                  className="w-full rounded-lg border border-slate-200 bg-white px-3.5 py-2.5 text-[15px] text-slate-900 outline-none transition-all placeholder:text-slate-400 focus:border-violet-400 focus:ring-4 focus:ring-violet-500/10 disabled:bg-slate-50"
                   placeholder="John Doe"
                 />
               </div>
@@ -189,7 +190,7 @@ export function Login() {
                 onChange={(e) => setEmail(e.target.value)}
                 required
                 disabled={loading}
-                className="w-full rounded-lg border border-slate-200 bg-white px-3.5 py-2.5 text-[15px] text-slate-900 outline-none transition-all placeholder:text-slate-400 focus:border-slate-400 focus:ring-4 focus:ring-slate-900/5 disabled:bg-slate-50"
+                className="w-full rounded-lg border border-slate-200 bg-white px-3.5 py-2.5 text-[15px] text-slate-900 outline-none transition-all placeholder:text-slate-400 focus:border-violet-400 focus:ring-4 focus:ring-violet-500/10 disabled:bg-slate-50"
                 placeholder="name@company.com"
               />
             </div>
@@ -205,7 +206,7 @@ export function Login() {
                 required
                 disabled={loading}
                 minLength={8}
-                className="w-full rounded-lg border border-slate-200 bg-white px-3.5 py-2.5 text-[15px] text-slate-900 outline-none transition-all placeholder:text-slate-400 focus:border-slate-400 focus:ring-4 focus:ring-slate-900/5 disabled:bg-slate-50"
+                className="w-full rounded-lg border border-slate-200 bg-white px-3.5 py-2.5 text-[15px] text-slate-900 outline-none transition-all placeholder:text-slate-400 focus:border-violet-400 focus:ring-4 focus:ring-violet-500/10 disabled:bg-slate-50"
                 placeholder="••••••••"
               />
             </div>
@@ -220,7 +221,7 @@ export function Login() {
                     value={role}
                     onChange={(e) => setRole(e.target.value)}
                     disabled={loading}
-                    className="w-full appearance-none rounded-lg border border-slate-200 bg-white px-3.5 py-2.5 text-[15px] text-slate-900 outline-none transition-all focus:border-slate-400 focus:ring-4 focus:ring-slate-900/5 cursor-pointer disabled:bg-slate-50"
+                    className="w-full appearance-none rounded-lg border border-slate-200 bg-white px-3.5 py-2.5 text-[15px] text-slate-900 outline-none transition-all focus:border-violet-400 focus:ring-4 focus:ring-violet-500/10 cursor-pointer disabled:bg-slate-50"
                   >
                     <option value="admin">Admin</option>
                     <option value="manager">Fleet Manager</option>
@@ -236,11 +237,11 @@ export function Login() {
 
             <div className="flex items-center justify-between pt-1">
               <label className="flex cursor-pointer items-center space-x-2.5">
-                <input type="checkbox" disabled={loading} className="h-4 w-4 rounded border-slate-300 text-slate-900 transition-colors focus:ring-slate-900 focus:ring-offset-0 cursor-pointer disabled:opacity-50" />
+                <input type="checkbox" disabled={loading} className="h-4 w-4 rounded border-slate-300 accent-violet-600 transition-colors focus:ring-violet-500 focus:ring-offset-0 cursor-pointer disabled:opacity-50" />
                 <span className="text-[14px] text-slate-600 hover:text-slate-900 transition-colors">Remember for 30 days</span>
               </label>
               {!isSignUp && (
-                <a href="#" className="text-[14px] font-medium text-slate-900 transition-colors hover:underline underline-offset-4">
+                <a href="#" className="text-[14px] font-medium text-violet-600 transition-colors hover:text-violet-700 hover:underline underline-offset-4">
                   Forgot password?
                 </a>
               )}
@@ -249,7 +250,8 @@ export function Login() {
             <button
               type="submit"
               disabled={loading}
-              className="mt-6 flex w-full items-center justify-center space-x-2 rounded-lg bg-slate-900 px-4 py-2.5 text-[15px] font-medium text-white transition-all hover:bg-slate-800 active:scale-[0.99] disabled:opacity-50 disabled:pointer-events-none"
+              className="mt-6 flex w-full items-center justify-center space-x-2 rounded-xl px-4 py-3 text-[15px] font-semibold text-white shadow-md shadow-[#714B67]/30 transition-all hover:shadow-lg hover:shadow-[#714B67]/40 hover:brightness-110 active:scale-[0.99] disabled:opacity-50 disabled:pointer-events-none"
+              style={{ background: "linear-gradient(135deg, #714B67 0%, #8F7B87 100%)" }}
             >
               {loading ? (
                 <Loader2 className="h-4 w-4 animate-spin text-slate-400" />
@@ -261,12 +263,17 @@ export function Login() {
 
           {/* Minimalist Role Indicator */}
           {!isSignUp && (
-            <div className="mt-10 rounded-xl bg-slate-50 p-5 border border-slate-100">
+            <div className="mt-10 rounded-xl bg-violet-50/50 p-5 border border-violet-100">
               <p className="mb-3 text-[13px] font-medium text-slate-700">Available Workspaces</p>
               <div className="flex flex-wrap gap-2">
-                {["Fleet", "Dispatch", "Safety", "Finance"].map((r) => (
-                  <span key={r} className="inline-flex items-center rounded-md bg-white px-2.5 py-1 text-[12px] font-medium text-slate-600 shadow-sm border border-slate-200">
-                    {r}
+                {[
+                  { name: "Fleet", bg: "bg-blue-50", text: "text-blue-600", border: "border-blue-200" },
+                  { name: "Dispatch", bg: "bg-amber-50", text: "text-amber-600", border: "border-amber-200" },
+                  { name: "Safety", bg: "bg-emerald-50", text: "text-emerald-600", border: "border-emerald-200" },
+                  { name: "Finance", bg: "bg-violet-50", text: "text-violet-600", border: "border-violet-200" },
+                ].map((r) => (
+                  <span key={r.name} className={`inline-flex items-center rounded-md px-2.5 py-1 text-[12px] font-semibold border ${r.bg} ${r.text} ${r.border}`}>
+                    {r.name}
                   </span>
                 ))}
               </div>
@@ -282,7 +289,7 @@ export function Login() {
                   setIsSignUp(!isSignUp);
                   setError("");
                 }}
-                className="font-medium text-slate-900 hover:underline underline-offset-4"
+                className="font-medium text-violet-600 hover:text-violet-700 hover:underline underline-offset-4"
               >
                 {isSignUp ? "Sign in" : "Request access"}
               </button>
