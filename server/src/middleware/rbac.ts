@@ -5,12 +5,9 @@ import { fromNodeHeaders } from "better-auth/node";
 // attach session to request
 export async function requireAuth(req: Request, res: Response, next: NextFunction) {
   try {
-    const session = await auth.api.getSession({
-      headers: fromNodeHeaders(req.headers),
+    const session = await auth.api.getSession({ headers: fromNodeHeaders(req.headers),
     });
-
-    if (!session) {
-      res.status(401).json({ error: { message: "not authenticated" } });
+    if (!session) { res.status(401).json({ error: { message: "not authenticated" } });
       return;
     }
 
