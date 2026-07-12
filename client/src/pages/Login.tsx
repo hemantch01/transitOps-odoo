@@ -44,7 +44,7 @@ export function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
-  const [role, setRole] = useState("Dispatcher");
+  const [role, setRole] = useState("admin");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   
@@ -57,7 +57,7 @@ export function Login() {
 
     try {
       if (isSignUp) {
-        const res = await signUp.email({ email, password, name, role });
+        const res = await signUp.email({ email, password, name });
         if (res.error) {
           setError(res.error.message || "Signup failed. Please try again.");
           return;
@@ -222,10 +222,10 @@ export function Login() {
                     disabled={loading}
                     className="w-full appearance-none rounded-lg border border-slate-200 bg-white px-3.5 py-2.5 text-[15px] text-slate-900 outline-none transition-all focus:border-slate-400 focus:ring-4 focus:ring-slate-900/5 cursor-pointer disabled:bg-slate-50"
                   >
-                    <option value="Fleet Manager">Fleet Manager</option>
-                    <option value="Dispatcher">Dispatcher</option>
-                    <option value="Safety Officer">Safety Officer</option>
-                    <option value="Financial Analyst">Financial Analyst</option>
+                    <option value="admin">Admin</option>
+                    <option value="manager">Fleet Manager</option>
+                    <option value="dispatcher">Dispatcher</option>
+                    <option value="viewer">Viewer</option>
                   </select>
                   <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3.5 text-slate-400">
                     <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 9l4-4 4 4m0 6l-4 4-4-4"></path></svg>

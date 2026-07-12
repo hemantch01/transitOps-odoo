@@ -19,7 +19,7 @@ export const auth = betterAuth({
  
   plugins: [
     admin({
-      defaultRole: "viewer",
+      defaultRole: "admin",
     }),
   ],
  
@@ -30,5 +30,15 @@ export const auth = betterAuth({
     },
     expiresIn: 24 * 60 * 60, // 24h
   },
-  trustedOrigins: [env.CLIENT_URL, "http://localhost"],
+  trustedOrigins: [
+    env.CLIENT_URL, 
+    "http://localhost", 
+    "http://localhost:5173", 
+    "http://127.0.0.1:5173", 
+    "http://localhost:5174",
+    "http://localhost:5175",
+    "http://localhost:5176",
+    "http://localhost:3000", 
+    "http://127.0.0.1:3000"
+  ],
 });

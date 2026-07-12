@@ -210,6 +210,111 @@ async function seed() {
     },
   });
 
+  // additional trip 1 for vehicle 1 (MH04EQ5678)
+  const trip2 = await prisma.trip.create({
+    data: {
+      source: "Mumbai",
+      destination: "Pune",
+      cargoWeight: 1500,
+      plannedDistance: 150,
+      actualDistance: 160,
+      ratePerKm: 25,
+      revenue: 4000,
+      status: "COMPLETED",
+      vehicleId: vehicles[1].id,
+      driverId: drivers[1].id,
+      startOdometer: 89120,
+      endOdometer: 89280,
+      fuelConsumed: 20,
+      dispatchedAt: new Date("2026-07-05T06:00:00Z"),
+      completedAt: new Date("2026-07-05T12:00:00Z"),
+    },
+  });
+
+  await prisma.fuelLog.create({
+    data: {
+      vehicleId: vehicles[1].id,
+      tripId: trip2.id,
+      liters: 20,
+      cost: 1900,
+      date: new Date("2026-07-05T08:00:00Z"),
+    },
+  });
+
+  // additional trip 2 for vehicle 2 (DL01AB9012)
+  const trip3 = await prisma.trip.create({
+    data: {
+      source: "Delhi",
+      destination: "Agra",
+      cargoWeight: 800,
+      plannedDistance: 230,
+      actualDistance: 240,
+      ratePerKm: 20,
+      revenue: 4800,
+      status: "COMPLETED",
+      vehicleId: vehicles[2].id,
+      driverId: drivers[2].id,
+      startOdometer: 67800,
+      endOdometer: 68040,
+      fuelConsumed: 18,
+      dispatchedAt: new Date("2026-07-08T07:00:00Z"),
+      completedAt: new Date("2026-07-08T14:00:00Z"),
+    },
+  });
+
+  await prisma.fuelLog.create({
+    data: {
+      vehicleId: vehicles[2].id,
+      tripId: trip3.id,
+      liters: 18,
+      cost: 1620,
+      date: new Date("2026-07-08T10:00:00Z"),
+    },
+  });
+
+  await prisma.maintenanceLog.create({
+    data: {
+      vehicleId: vehicles[2].id,
+      type: "Tire Replacement",
+      description: "Replaced 2 rear tires",
+      cost: 8000,
+      status: "COMPLETED",
+      startDate: new Date("2026-07-01"),
+      endDate: new Date("2026-07-02"),
+    },
+  });
+
+  // additional trip 3 for vehicle 3 (GJ05PQ3456)
+  const trip4 = await prisma.trip.create({
+    data: {
+      source: "Ahmedabad",
+      destination: "Surat",
+      cargoWeight: 4500,
+      plannedDistance: 260,
+      actualDistance: 275,
+      ratePerKm: 35,
+      revenue: 9625,
+      status: "COMPLETED",
+      vehicleId: vehicles[3].id,
+      driverId: drivers[3].id,
+      startOdometer: 120450,
+      endOdometer: 120725,
+      fuelConsumed: 45,
+      dispatchedAt: new Date("2026-07-10T05:00:00Z"),
+      completedAt: new Date("2026-07-10T11:00:00Z"),
+    },
+  });
+
+  await prisma.fuelLog.create({
+    data: {
+      vehicleId: vehicles[3].id,
+      tripId: trip4.id,
+      liters: 45,
+      cost: 4200,
+      date: new Date("2026-07-10T09:00:00Z"),
+    },
+  });
+
   console.log("seed complete!");
 }
 

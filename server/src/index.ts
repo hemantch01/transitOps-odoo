@@ -30,10 +30,25 @@ app.use(helmet(
 }
 ));
 
+app.use((req, res, next) => {
+  console.log(`[DEBUG] ${req.method} ${req.url} - Origin: ${req.headers.origin} - Host: ${req.headers.host}`);
+  next();
+});
+
 // cors
 app.use(cors(
   {
-  origin: [env.CLIENT_URL, "http://localhost"],
+  origin: [
+    env.CLIENT_URL, 
+    "http://localhost", 
+    "http://localhost:5173", 
+    "http://127.0.0.1:5173",
+    "http://localhost:5174",
+    "http://localhost:5175",
+    "http://localhost:5176",
+    "http://localhost:3000", 
+    "http://127.0.0.1:3000"
+  ],
   credentials: true,
 }
 ));
