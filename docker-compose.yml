@@ -1,0 +1,75 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: transitops-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: transitops
+      POSTGRES_USER: transitops_user
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - app-net
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U transitops_user -d transitops"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  server:
+    build:
+      context: .
+      dockerfile: server/Dockerfile
+    container_name: transitops-server
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgresql://transitops_user:${DB_PASSWORD}@postgres:5432/transitops
+      BETTER_AUTH_SECRET: ${BETTER_AUTH_SECRET}
+      BETTER_AUTH_URL: http://localhost:3000
+      NODE_ENV: ${NODE_ENV:-development}
+      PORT: 3000
+      CLIENT_URL: http://localhost:5173
+    ports:
+      - "3000:3000"
+    networks:
+      - app-net
+
+  client:
+    build:
+      context: .
+      dockerfile: client/Dockerfile
+    container_name: transitops-client
+    restart: unless-stopped
+    depends_on:
+      - server
+    ports:
+      - "5173:5173"
+    networks:
+      - app-net
+
+  nginx:
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+    container_name: transitops-proxy
+    restart: unless-stopped
+    depends_on:
+      - client
+      - server
+    ports:
+      - "80:80"
+    networks:
+      - app-net
+
+volumes:
+  pgdata:
+
+networks:
+  app-net:
+    driver: bridge
