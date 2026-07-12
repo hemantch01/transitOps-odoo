@@ -133,3 +133,100 @@ enum DriverStatus {
   OFF_DUTY
   SUSPENDED
 }
+
+model Trip {
+  id              String     @id @default(uuid())
+  source          String
+  destination     String
+  cargoWeight     Float      // kg
+  plannedDistance  Float      // km
+  actualDistance   Float?
+  ratePerKm       Float?     // auto-compute: revenue = ratePerKm × actualDistance
+  revenue         Float?     // manual override takes priority
+  status          TripStatus @default(DRAFT)
+
+  vehicleId String
+  vehicle   Vehicle @relation(fields: [vehicleId], references: [id])
+  driverId  String
+  driver    Driver  @relation(fields: [driverId], references: [id])
+
+  startOdometer Float?
+  endOdometer   Float?
+  fuelConsumed  Float?
+
+  dispatchedAt DateTime?
+  completedAt  DateTime?
+  cancelledAt  DateTime?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  @@index([status])
+  @@index([vehicleId])
+  @@index([driverId])
+}
+
+enum TripStatus {
+  DRAFT
+  DISPATCHED
+  COMPLETED
+  CANCELLED
+}
+
+model MaintenanceLog {
+  id          String            @id @default(uuid())
+  vehicleId   String
+  vehicle     Vehicle           @relation(fields: [vehicleId], references: [id])
+  type        String
+  description String?
+  cost        Float
+  status      MaintenanceStatus @default(ACTIVE)
+  startDate   DateTime          @default(now())
+  endDate     DateTime?
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
+
+  @@index([vehicleId])
+  @@index([status])
+}
+
+enum MaintenanceStatus {
+  ACTIVE
+  COMPLETED
+}
+
+model FuelLog {
+  id        String   @id @default(uuid())
+  vehicleId String
+  vehicle   Vehicle  @relation(fields: [vehicleId], references: [id])
+  tripId    String?
+  liters    Float
+  cost      Float
+  date      DateTime
+  createdAt DateTime @default(now())
+
+  @@index([vehicleId])
+  @@index([date])
+}
+
+model Expense {
+  id          String      @id @default(uuid())
+  vehicleId   String
+  vehicle     Vehicle     @relation(fields: [vehicleId], references: [id])
+  tripId      String?
+  type        ExpenseType
+  description String?
+  amount      Float
+  date        DateTime
+  createdAt   DateTime    @default(now())
+
+  @@index([vehicleId])
+  @@index([type])
+}
+
+enum ExpenseType {
+  FUEL
+  MAINTENANCE
+  TOLL
+  INSURANCE
+  OTHER
+}
